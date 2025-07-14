@@ -1,0 +1,68 @@
+﻿@using NCRMODEL.Model
+@model NCRModel
+@{
+    ViewBag.Title = "View NCR Data";
+}
+<div class="col-lg-12">
+    <div class="card" style="margin:13px;">
+        <div class="card-header" style="background: cadetblue; color: white ">
+            <strong>View NCR</strong>
+        </div>
+        <div class="card-body card-block">
+            <div class="table-responsive m-b-40">
+                <table class="table table-borderless table-data3" id="examples">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>NCR Date</th>
+                            <th>NCR Number</th>
+
+                            <th>MRN Number</th>
+                            <th>PO Number</th>
+                            <th>Vendor</th>
+                            <th>Total Received</th>
+                            <th>Total Rejected</th>
+                            <th>View NCR</th>
+                            <th>Resend mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ncrmodelList != null)
+                        {
+                            foreach (var item in Model.ncrmodelList)
+                            {
+                                <tr class="tr-shadow">
+
+                                    <td>@item.SrNo</td>
+                                    <td>@item.NCRDate</td>
+                                    <td>@item.NCRNumber</td>
+
+                                    <td>
+                                        @item.MRNno
+                                    </td>
+                                    <td> @item.PO</td>
+                                    <td>@item.VendorCode</td>
+                                    <td>
+                                        @item.TotalRecieved
+                                    </td>
+                                    <td>@item.TotalRejected</td>
+                                    <td>
+                                        <div class="table-data-feature">
+                                            <a href="@Url.Action("Download","NCR",new {NCRNumber = @item.NCRID})" class="item" title="Print" id="download-button"><i class="zmdi zmdi-print"></i></a>
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                        <div class="table-data-feature">
+                                            <a href="@Url.Action("Sendmail","NCR",new {NCRNumber = @item.NCRID})" class="item" title="Resend"><i class="zmdi zmdi-email"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

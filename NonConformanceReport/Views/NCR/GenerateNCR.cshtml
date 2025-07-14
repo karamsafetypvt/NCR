@@ -1,0 +1,446 @@
+﻿@using NCRMODEL.Model
+@model NCRModel
+@{
+    ViewBag.Title = "Generate NCR";
+}
+<div class="col-lg-12">
+    @using (Html.BeginForm("GenerateNCR", "NCR", FormMethod.Post, new { enctype = "multipart/form-data",@id="NCRForm"}))
+    {
+        <div class="card" style="margin:13px;">
+            <div class="card-header" style="background: cadetblue; color: white">
+                <strong>Generate NCR</strong>
+            </div>
+            <div class="card-body card-block">
+
+                <div class="row form-group">
+                    <div class="col col-md-4">
+                       
+                    </div>
+                    <div class="col col-md-2">
+                        <label class=" form-control-label">NCR No.</label>
+                        @Html.TextBoxFor(m => m.NCRNumber, new { @class = "form-control", @id = "txtNCRNumber", placeholder = "NCR No." })
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class=" form-control-label">Date</label>
+                        @Html.TextBoxFor(m => m.NCRDate, new { @class = "form-control", @id = "txtNCRDate", placeholder = "Date" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-4">
+                        <label class=" form-control-label required">PO</label>
+                        @Html.TextBoxFor(m => m.PO, new { @class = "form-control required", @id = "txtPO", placeholder = "PO", @onchange = "return POnumberDetail();" })
+                        @*@Html.ValidationMessageFor(m => m.PO, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">MRN No.</label>
+                        @Html.DropDownListFor(m => m.MRNno, Model.MRNNoList, new { @class = "form-control required", @id = "ddlMRNNO", placeholder = "MRN No.", @onchange = "return MRNnumberDetail();" })
+                        @*@Html.ValidationMessageFor(m => m.MRNno, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Item Code</label>
+                        @Html.DropDownListFor(m => m.ItemCode, Model.ItemCodeList, new { @class = "form-control required", @id = "ddlItemCode", placeholder = "Item Code", @onchange = "return ItemCodeDetail();" })
+                        @*@Html.ValidationMessageFor(m => m.ItemCode, "", new { @class = "m-form__help" })*@
+                    </div>
+
+                </div>
+                <div class="row form-group">
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Vendor</label>
+                        @Html.TextBoxFor(m => m.VendorCode, new { @class = "form-control required", @id = "txtVendorCode", placeholder = "Vendor", @readonly = "true" })
+                        @*@Html.ValidationMessageFor(m => m.VendorCode, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Contact Person</label>
+                        @Html.TextBoxFor(m => m.Contact, new { @class = "form-control required", @id = "txtContact", placeholder = "Contact Person" })
+                        @*@Html.ValidationMessageFor(m => m.Contact, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Phone</label>
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control required", @id = "txtPhone", placeholder = "Phone", @maxlength = "30" })
+                        @*@Html.ValidationMessageFor(m => m.Phone, "", new { @class = "m-form__help" })*@
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12 col-md-4">
+                        <label class="form-control-label required">Email</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control required", @id = "txtEmail", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "m-form__help" })
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Total Recieved</label>
+                        @Html.TextBoxFor(m => m.TotalRecieved, new { @class = "form-control required", @id = "txtTotalRecieved", placeholder = "Total Recieved", @maxlength = "6" })
+                        @*@Html.ValidationMessageFor(m => m.TotalRecieved, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Total Rejected</label>
+                        @Html.TextBoxFor(m => m.TotalRejected, new { @class = "form-control required", @id = "txtTotalRejected", placeholder = "Total Rejected", @maxlength = "6" })
+                        @*@Html.ValidationMessageFor(m => m.TotalRejected, "", new { @class = "m-form__help" })*@
+                        <span id="rejectedValidation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Address</label>
+                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control required", @id = "txtAddress", placeholder = "Write here...", @rows = "7" })
+                        @*@Html.ValidationMessageFor(m => m.Address, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class=" form-control-label required">Item Description</label>
+                        @Html.TextAreaFor(m => m.ItemDescription, new { @class = "form-control required", @id = "txtItemDescription", placeholder = "Write here...", @rows = "7" })
+                        @*@Html.ValidationMessageFor(m => m.ItemDescription, "", new { @class = "m-form__help" })*@
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-control-label required">Detail Of Non-Conformance </label>
+                        @Html.TextAreaFor(m => m.DetailofNonConformance, new { @class = "form-control required", @id = "txtDetailofNonConformance", @rows = "7", placeholder = "Enter reason for rejecton." })
+                        @*@Html.ValidationMessageFor(m => m.DetailofNonConformance, "", new { @class = "m-form__help" })*@
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12 col-md-3">
+                        <label class="form-control-label required">Image 1</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.RefrenceImage1, new { @type = "file", @onchange = "show1(this)", @class = "form-control m-input required", @id = "file1", @accept = "image/*" })
+                            @Html.HiddenFor(m => m.ImagePath1)
+                        </div>
+                        @*<div class="imgdiv" height="500" width="500"><img id="user_img1" height="500" width="500" style="border: hidden; display: none" /></div>*@
+                        <img id="user_img1" height="300" width="500" style="border: hidden; display: none" />
+                        <span class="m-form__help" id="imgextension1"></span>
+                        @if (!String.IsNullOrEmpty(Model.ImagePath1))
+                        {
+                            <div class="imgdiv imgdiv1" height="300" width="500"><img id="user_img1" Width="500" Height="500" style="border:hidden;display:block" src="@Model.ImagePath1" /></div>
+                        }
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="form-control-label">Image 2</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.RefrenceImage2, new { @type = "file", @onchange = "show2(this)", @class = "form-control m-input", @id = "file2", @accept = "image/*" })
+                            @Html.HiddenFor(m => m.ImagePath2)
+                        </div>
+                        @*<div class="imgdiv" height="500" width="500"><img id="user_img2" Width="500" Height="500" style="border: hidden; display: none" /></div>*@
+                        <img id="user_img2" Width="500" Height="300" style="border: hidden; display: none" />
+                        <span class="m-form__help" id="imgextension2"></span>
+                        @if (!String.IsNullOrEmpty(Model.ImagePath2))
+                        {
+                            <div class="imgdiv imgdiv2" height="300" width="500"><img id="user_img1" Width="500" Height="500" style="border:hidden;display:block" src="@Model.ImagePath2" /></div>
+                        }
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="form-control-label">Image 3</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.RefrenceImage3, new { @type = "file", @onchange = "show3(this)", @class = "form-control m-input", @id = "file3", @accept = "image/*" })
+                            @Html.HiddenFor(m => m.ImagePath3)
+                        </div>
+                        @*<div class="imgdiv" height="500" width="500"><img id="user_img3" Width="500" Height="500" style="border: hidden; display: none" /></div>*@
+                        <img id="user_img3" Width="500" Height="300" style="border: hidden; display: none" />
+                        <span class="m-form__help" id="imgextension3"></span>
+                        @if (!String.IsNullOrEmpty(Model.ImagePath3))
+                        {
+                            <div class="imgdiv imgdiv3" height="300" width="500"><img id="user_img1" Width="500" Height="500" style="border:hidden;display:block" src="@Model.ImagePath3" /></div>
+                        }
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="form-control-label">Image 4</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.RefrenceImage4, new { @type = "file", @onchange = "show4(this)", @class = "form-control m-input", @id = "file4", @accept = "image/*" })
+                            @Html.HiddenFor(m => m.ImagePath4)
+                        </div>
+                        @*<div class="imgdiv" height="500" width="500"><img id="user_img4" height="500" width="500" style="border: hidden; display: none" /></div>*@
+                        <img id="user_img4" height="300" width="500" style="border: hidden; display: none" />
+                        <span class="m-form__help" id="imgextension4"></span>
+                        @if (!String.IsNullOrEmpty(Model.ImagePath4))
+                        {
+                            <div class="imgdiv imgdiv4" height="300" width="500"><img id="user_img1" height="500" width="500" style="border:hidden;display:block" src="@Model.ImagePath4" /></div>
+                        }
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-sm" id="savebutton">
+                    <i class="fa fa-dot-circle-o"></i> Generate
+                </button>
+                <button type="reset" class="btn btn-danger btn-sm btnReset">
+                    <i class="fa fa-ban"></i> Reset
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script type="text/javascript">
+    function POnumberDetail() {
+        var POval = $('#txtPO').val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/NCR/GetNCRData?POCode=' + POval,
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                if (data.MRNNoList == null) {
+                    swal({
+                        title: "",
+                        text: "PO not found.",
+                        type: "warning"
+                    });
+                } else {
+                    $("#txtPO").attr("readonly", true);
+                    $("#txtVendorCode").val(data.VendorCode);
+                    if (data.Contact != '') {
+                        $("#txtContact").val(data.Contact);
+                        $("#txtContact").attr("readonly", true);
+                    }
+                    if (data.Phone != '') {
+                        $("#txtPhone").val(data.Phone);
+                        $("#txtPhone").attr("readonly", true);
+                    }
+                    if (data.Email != '') {
+                        var mail = data.Email.replace(/"/g,'');
+
+                        $("#txtEmail").val((mail).trim());
+                        $("#txtEmail").attr("readonly", true);
+                    }
+
+                    if (data.Address != '') {
+                        $("#txtAddress").val(data.Address);
+                        $("#txtAddress").attr("readonly", true);
+                    }
+
+                    $.each(data.MRNNoList, function () {
+                        $('#ddlMRNNO').append("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    });
+                }
+
+            },
+            error: function (result) {
+                alert("No Match");
+            }
+        });
+    }
+    function MRNnumberDetail() {
+        debugger;
+        var MRNval = $('#ddlMRNNO').val();
+        var POval = $('#txtPO').val();
+        var params = { MRNCode: MRNval, PONumber: POval }
+        $('#ddlItemCode').empty();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/NCR/GetNCRItemData',
+            data: JSON.stringify(params),
+            success: function (data) {
+                $.each(data.ItemCodeList, function () {
+                    $('#ddlItemCode').append("<option value=" + this.Value + ">" + this.Text + "</option>");
+                });
+            },
+            error: function (result) {
+                alert("No Match");
+            }
+        });
+    }
+    function ItemCodeDetail() {
+        var MRNval = $('#ddlMRNNO').val();
+        var POval = $('#txtPO').val();
+        var ItemCodeval = $('#ddlItemCode').val();
+        var params = { MRNCode: MRNval, PONumber: POval, ItemCode: ItemCodeval }
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/NCR/GetItemDescription',
+            data: JSON.stringify(params),
+            success: function (data) {
+                if (data.ItemDescription != null) {
+                    $("#txtItemDescription").val(data.ItemDescription);
+                    $("#txtItemDescription").attr("readonly", true);
+                } else {
+                    $("#txtItemDescription").removeAttr("readonly");
+                }
+
+            },
+            error: function (result) {
+                alert("No Match");
+            }
+        });
+    }
+
+    function show1(input) {
+        var img = $('#user_img1').attr('src');
+        if (img != null);
+        {
+            $('.imgdiv1').hide();
+        }
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            var fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+            if (fileSizeInMB > 10) {
+                // Display an error message or perform appropriate action for large files
+                $("#file1").val('');
+                $("#user_img1").hide();
+                alert('Please select an image that is 10 MB or smaller.');
+                return;
+            }
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img1').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+            $('#user_img1').show();
+        }
+    }
+    function show2(input) {
+        var img = $('#user_img2').attr('src');
+        if (img != null);
+        {
+            $('.imgdiv2').hide();
+        }
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            var fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+            if (fileSizeInMB > 10) {
+                // Display an error message or perform appropriate action for large files
+                $("#file2").val('');
+                $("#user_img2").hide();
+                alert('Please select an image that is 10 MB or smaller.');
+                return;
+            }
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img2').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+            $('#user_img2').show();
+        }
+    }
+    function show3(input) {
+        var img = $('#user_img3').attr('src');
+        if (img != null);
+        {
+            $('.imgdiv3').hide();
+        }
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            var fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+            if (fileSizeInMB > 10) {
+                // Display an error message or perform appropriate action for large files
+                $("#file3").val('');
+                $("#user_img3").hide();
+                alert('Please select an image that is 10 MB or smaller.');
+                return;
+            }
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img3').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+            $('#user_img3').show();
+        }
+    }
+    function show4(input) {
+        var img = $('#user_img4').attr('src');
+        if (img != null);
+        {
+            $('.imgdiv4').hide();
+        }
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            var fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+            if (fileSizeInMB > 10) {
+                // Display an error message or perform appropriate action for large files
+                $("#file4").val('');
+                $("#user_img4").hide();
+                alert('Please select an image that is 10 MB or smaller.');
+                return;
+            }
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img4').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+            $('#user_img4').show();
+        }
+    }
+
+    $(document).ready(function () {
+        $("#txtNCRNumber").attr("readonly", true);
+        $("#txtNCRDate").attr("readonly", true);
+        $('#txtTotalRecieved, #txtTotalRejected, #txtPhone').on('input', function () {
+            // Replace any non-numeric characters with an empty string
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        });
+
+        $('#txtTotalRejected').on('input', function () {
+            var totalReceived = parseInt($('#txtTotalRecieved').val()) || 0;
+            var totalRejected = parseInt($(this).val()) || 0;
+
+            if (totalRejected > totalReceived) {
+                $('#rejectedValidation').text("Total Rejected cannot be greater than Total Received.");
+                $('#txtTotalRejected').val('');
+            } else {
+                $('#rejectedValidation').text("");
+            }
+        });
+        $('#txtTotalRecieved').on('input', function () {
+            var totalRejected = parseInt($('#txtTotalRejected').val()) || 0;
+            var totalReceived = parseInt($(this).val()) || 0;
+
+            if (totalRejected > totalReceived) {
+                $('#rejectedValidation').text("Total Rejected cannot be greater than Total Received.");
+                $('#txtTotalRejected').val('');
+            } else {
+                $('#rejectedValidation').text("");
+            }
+        });
+
+        $("#savebutton").click(function (e) {
+            e.preventDefault(); 
+            $.ajax({
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                url: '/NCR/ValidateEmails?emails=' + $("#txtEmail").val(),
+                success: function (data) {
+                    debugger;
+                    if (data == "False") {
+                        alert("Invalid Email.");
+                        $("#txtEmail").removeAttr("readonly");
+                        return;
+                    }
+                    $("#NCRForm").submit();
+                },
+                error: function (result) {
+                    alert("Something went wrong.");
+                    return ;
+                }
+            }); 
+        })
+    })
+    $('.btnReset').click(function () {
+        debugger;
+        $('#txtPO').removeAttr("readonly");
+        $('#txtContact').removeAttr("readonly");
+        $('#txtPhone').removeAttr("readonly");
+        $('#txtEmail').removeAttr("readonly");
+        $('#txtAddress').removeAttr("readonly");
+        $('#ddlMRNNO').empty();
+        $('#ddlItemCode').empty();
+        $("#RefrenceImage1").val('');
+        $("#RefrenceImage2").val('');
+        $("#RefrenceImage3").val('');
+        $("#RefrenceImage4").val('');
+        $("#user_img4").hide();
+        $("#user_img3").hide();
+        $("#user_img2").hide();
+        $("#user_img1").hide();
+    })
+
+     $(window).on('load', function () {
+            $(".page-loader-wrapper").fadeOut("slow");
+        });
+
+        $(window).on('beforeunload', function () {
+            $(".page-loader-wrapper").fadeIn(50);
+        });
+
+
+
+</script>

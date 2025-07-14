@@ -1,0 +1,95 @@
+﻿@using NCRMODEL.Model
+@model LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/karam.png" />
+    <title>Login - NON CONFORMANCE REPORT</title>
+    @Styles.Render("~/assets/css")
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="css/theme.css" rel="stylesheet" media="all">
+    <meta name="robots" content="noindex, nofollow">
+    @*<script nonce="134b5544-7a74-40e4-82e9-dc9451a2e799">(function (w, d) { !function (bv, bw, bx, by) { bv[bx] = bv[bx] || {}; bv[bx].executed = []; bv.zaraz = { deferred: [], listeners: [] }; bv.zaraz.q = []; bv.zaraz._f = function (bz) { return function () { var bA = Array.prototype.slice.call(arguments); bv.zaraz.q.push({ m: bz, a: bA }) } }; for (const bB of ["track", "set", "debug"]) bv.zaraz[bB] = bv.zaraz._f(bB); bv.zaraz.init = () => { var bC = bw.getElementsByTagName(by)[0], bD = bw.createElement(by), bE = bw.getElementsByTagName("title")[0]; bE && (bv[bx].t = bw.getElementsByTagName("title")[0].text); bv[bx].x = Math.random(); bv[bx].w = bv.screen.width; bv[bx].h = bv.screen.height; bv[bx].j = bv.innerHeight; bv[bx].e = bv.innerWidth; bv[bx].l = bv.location.href; bv[bx].r = bw.referrer; bv[bx].k = bv.screen.colorDepth; bv[bx].n = bw.characterSet; bv[bx].o = (new Date).getTimezoneOffset(); if (bv.dataLayer) for (const bI of Object.entries(Object.entries(dataLayer).reduce(((bJ, bK) => ({ ...bJ[1], ...bK[1] })), {}))) zaraz.set(bI[0], bI[1], { scope: "page" }); bv[bx].q = []; for (; bv.zaraz.q.length;) { const bL = bv.zaraz.q.shift(); bv[bx].q.push(bL) } bD.defer = !0; for (const bM of [localStorage, sessionStorage]) Object.keys(bM || {}).filter((bO => bO.startsWith("_zaraz_"))).forEach((bN => { try { bv[bx]["z_" + bN.slice(7)] = JSON.parse(bM.getItem(bN)) } catch { bv[bx]["z_" + bN.slice(7)] = bM.getItem(bN) } })); bD.referrerPolicy = "origin"; bD.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(bv[bx]))); bC.parentNode.insertBefore(bD, bC) };["complete", "interactive"].includes(bw.readyState) ? zaraz.init() : bv.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document);</script>*@
+<style>
+    .art-bothside {
+      /*  max-width: 30%;*/
+        margin: 0em auto;
+        padding: 2em 2em 3em;
+        -webkit-box-shadow: -2px 7px 37px 8px rgba(0,0,0,0.52);
+        -moz-box-shadow: -2px 7px 37px 8px rgba(0,0,0,0.52);
+        box-shadow: -2px 7px 37px 8px rgba(0,0,0,0.52);
+        background: rgba(255, 251, 251, 0.16);
+        border-radius: 5px;
+        border: 2px solid #ffffff47;
+    }
+
+    body {
+        background: url(../../assets/images/b2.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        min-height: 100vh;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
+        font-family: 'Barlow', sans-serif;
+        letter-spacing: 1px;
+        font-size: 29px;
+        color: #cf0600;
+    }
+    .resp-tab-active, .resp-tab-item:hover {
+        text-shadow: none;
+        background: rgba(255, 255, 255, 0);
+        color: #fff;
+        border: none;
+        border-bottom: 2px solid #cf0600;
+    }
+</style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div>
+            <div class="container">
+                <div class="login-wrap">
+                    <div class="art-bothside">
+                        <div class="login-logo">
+                            <a href="javascrpit:void(0);">
+                                <img src="../../assets/images/karam.png" alt="Karam"><br/><div class="resp-tabs-list col-md-12 resp-tab-item text-center resp-tab-active" style="font-weight:bold;font-size:20px;"><h2>Online NCR Portal</h2></div>
+                            </a>
+                        </div>
+                        <div class="login-form">
+                            @using (Html.BeginForm("Index", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="form-group">
+                               
+                                    @Html.TextBoxFor(m => m.UserID, new { @class = "au-input au-input--full", @placeholder = "User Name", @id = "txtUserID" })
+                                </div>
+                                <div class="form-group">
+                              
+                                    @Html.TextBoxFor(m => m.Password, new { @class = "au-input au-input--full", @placeholder = "Password", @id = "txtPassword", @Type = "password" })
+                                </div>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                                <span class="text-center errormsg" style="color:red;text-align:center;margin-left:5%"> @Html.Raw(@ViewBag.Message)</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/rcrop")
+</body>
+</html>

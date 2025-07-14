@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/karam.png" />
+    <title>@ViewBag.Title-NON CONFORMANCE REPORT</title>
+    @Styles.Render("~/assets/css")
+    @Scripts.Render("~/bundles/jquery")
+    <style>
+        .m-form__help {
+            font-weight: 500 !important;
+            display: inline-block;
+            margin-left: 133px;
+            color: red;
+        }
+
+        .required:after {
+            content: " *";
+            color: red;
+        }
+
+        .btn-wd {
+            min-width: 140px;
+        }
+
+        .btn.btn-fill,
+        .navbar .navbar-nav > li > a.btn.btn-fill {
+            color: #FFFFFF;
+            background-color: #66615B;
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #66615B;
+            border-color: #66615B;
+        }
+
+            .btn-info:hover {
+                color: #fff;
+                background-color: #4272d7;
+                border-color: #4272d7;
+            }
+
+        /*.active {
+            color: #4272d7;
+        }*/
+    </style>
+    @*<script nonce="40a33ff6-34fa-4b72-961d-50e72e69078c">(function (w, d) { !function (Y, Z, _, ba) { Y[_] = Y[_] || {}; Y[_].executed = []; Y.zaraz = { deferred: [], listeners: [] }; Y.zaraz.q = []; Y.zaraz._f = function (bb) { return function () { var bc = Array.prototype.slice.call(arguments); Y.zaraz.q.push({ m: bb, a: bc }) } }; for (const bd of ["track", "set", "debug"]) Y.zaraz[bd] = Y.zaraz._f(bd); Y.zaraz.init = () => { var be = Z.getElementsByTagName(ba)[0], bf = Z.createElement(ba), bg = Z.getElementsByTagName("title")[0]; bg && (Y[_].t = Z.getElementsByTagName("title")[0].text); Y[_].x = Math.random(); Y[_].w = Y.screen.width; Y[_].h = Y.screen.height; Y[_].j = Y.innerHeight; Y[_].e = Y.innerWidth; Y[_].l = Y.location.href; Y[_].r = Z.referrer; Y[_].k = Y.screen.colorDepth; Y[_].n = Z.characterSet; Y[_].o = (new Date).getTimezoneOffset(); if (Y.dataLayer) for (const bk of Object.entries(Object.entries(dataLayer).reduce(((bl, bm) => ({ ...bl[1], ...bm[1] })), {}))) zaraz.set(bk[0], bk[1], { scope: "page" }); Y[_].q = []; for (; Y.zaraz.q.length;) { const bn = Y.zaraz.q.shift(); Y[_].q.push(bn) } bf.defer = !0; for (const bo of [localStorage, sessionStorage]) Object.keys(bo || {}).filter((bq => bq.startsWith("_zaraz_"))).forEach((bp => { try { Y[_]["z_" + bp.slice(7)] = JSON.parse(bo.getItem(bp)) } catch { Y[_]["z_" + bp.slice(7)] = bo.getItem(bp) } })); bf.referrerPolicy = "origin"; bf.src = "https://colorlib.com/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(Y[_]))); be.parentNode.insertBefore(bf, be) };["complete", "interactive"].includes(Z.readyState) ? zaraz.init() : Y.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document);</script>*@
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header-desktop3 d-none d-lg-block">
+            <div class="section__content section__content--p35">
+                <div class="header3-wrap">
+                    <div class="header__logo">
+                        <a href="javascript:void(0)">
+                            <img src="~/assets/images/karam.png" alt="NCR" />
+                        </a>
+                    </div>
+                    <div class="header__navbar">
+                        <ul id="memnav" class="list-unstyled">
+                            @*<li class="has-sub">
+                                    <a href="javascript:void(0)">
+                                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                                        <span class="bot-line"></span>
+                                    </a>
+                                </li>*@
+                            <li class="has-sub">
+                                <a href="~/NCR/GenerateNCR" id="lnkGenerateNCR">
+                                    <i class="fas fa-trophy"></i>Generate
+                                    <span class="bot-line"></span>
+                                </a>
+
+                            </li>
+                            <li class="has-sub">
+                                <a href="~/NCR/ViewNCRData" id="lnkViewNCRData">
+                                    <i class="fas fa-desktop"></i>View NCR
+                                    <span class="bot-line"></span>
+                                </a>
+                            </li>
+                            <li class="has-sub">
+                                <a href="~/NCR/Report" id="lnkReport">
+                                    <i class="fas fa-copy"></i>Report
+                                    <span class="bot-line"></span>
+                                </a>
+                            </li>
+                            @*<li class="has-sub">
+                                   <a href="javascript:void(0)" title="Refersh Before Generating" onclick="return btnRefresh_Click()">
+                                       <i class="fas fa fa-refresh"></i>
+                                       <span class="bot-line"></span>
+                                   </a>
+                                </li>*@
+                        </ul>
+                    </div>
+                    <div class="header__tool">
+
+
+                        <div class="account-wrap">
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                @*<div class="image">
+                                        <img src="https://colorlib.com/polygon/cooladmin/images/icon/avatar-01.jpg" alt="John Doe" />
+                                    </div>*@
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#">@Session["Unit"].ToString()</a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    @*<div class="info clearfix">
+                                            <div class="image">
+                                                <a href="javascript:void(0);">
+                                                    <img src="https://colorlib.com/polygon/cooladmin/images/icon/avatar-01.jpg" alt="John Doe" />
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="name">
+                                                    <a href="javascript:void(0);">@Session["Unit"].ToString()</a>
+                                                </h5>
+                                                <span class="email"><a href="https://colorlib.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="33595c5b5d575c5673564b525e435f561d505c5e">[email&#160;protected]</a></span>
+                                            </div>
+                                        </div>*@
+                                    <div class="account-dropdown__footer">
+                                        <a href="/Account/LogOut">
+                                            <i class="zmdi zmdi-power"></i>Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <header class="header-mobile header-mobile-2 d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" href="javascript:void(0);">
+                            <img src="~/assets/images/karam.png" alt="NCR" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="page-content--bgf7">
+            @RenderBody()
+            <hr />
+            <section class="p-t-60 p-b-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>&copy; @DateTime.Now.Year. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="page-loader-wrapper">
+                <div class="loader">
+                    <div class="m-t-30">
+                        <img class="loading-img-spin" src="../../assets/images/karam.png" alt="admin">
+                    </div>
+                    <p>Please wait...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrapvalidation")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#examples').DataTable({ 
+            "lengthMenu": [[10, 50, 100, -1], ["10", "50", "100", "All"]]
+            });
+             
+         var returnMessage = '@TempData["ReturnMessage"]';
+            var returnCode = '@TempData["ReturnCode"]';
+            var href = '@TempData["href"]';
+            var MessageType = '@TempData["MessageType"]';
+            if (returnCode.length > 0) {
+                if (href.length > 0)
+                {
+                    if (returnCode == -5 || returnCode == 23)
+                        AlertWithTitleIconNewWindow("", returnMessage, "warning", href);
+                    else if (returnCode < 1)
+                        AlertWithTitleIconNewWindow("", returnMessage, "error", href);
+                    else if (returnCode > 0)
+                        AlertWithTitleIconNewWindow("", returnMessage, "success", href);
+                }
+                else if (returnCode == 99)
+                {
+                    AlertWithTitleIcon("", returnMessage, "error");
+                }
+                else
+                {
+                    if (returnCode == -5 || returnCode == 23)
+                         AlertWithTitleIcon("", returnMessage, "warning");
+                    else if (returnCode <1)
+                        AlertWithTitleIcon("", returnMessage, "error");
+                    else if (returnCode>0)
+                        AlertWithTitleIcon("", returnMessage, "success");
+                }
+            }
+            function AlertWithTitleIcon(title, text, type) {
+
+            swal({
+                title: title,
+                text: text,
+                type: type
+            });
+        }
+            function AlertWithTitleIconNewWindow(title, text, type, newWindow) {
+
+            swal({
+                title: title,
+                text: text,
+                type: type
+            },
+                function () {
+                    window.location.href = newWindow;
+                });
+            }
+
+            //$(function () {
+            //    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            //        localStorage.setItem('lastTab', $(this).attr('href'));
+            //    });
+            //    var lastTab = localStorage.getItem('lastTab');
+
+            //    if (lastTab) {
+            //        $('[href="' + lastTab + '"]').tab('show');
+            //    }
+
+            //});
+          });
+        //$(window).on('load', function () {
+        //    $(".page-loader-wrapper").fadeOut("slow");
+        //});
+
+        //$(window).on('beforeunload', function () {
+        //    $(".page-loader-wrapper").fadeIn(50);
+        //});
+
+        $(window).bind("pageshow", function (event) {
+            $(".page-loader-wrapper").hide();
+        });
+
+        function btnRefresh_Click() {
+            $.ajax({
+                type: "Get",
+                contentType: "application/json; charset=utf-8",
+                url: '/NCR/btnRefresh_Click',
+                data: '',
+                beforeSend: function () {
+                    debugger;
+                    $('.page-loader-wrapper').show()
+                },
+                complete: function () {
+                    $('.page-loader-wrapper').hide();
+                },
+                success: function (data) {
+                    alert('NCR Data is Successfully Refresh');
+                },
+
+                error: function (result) {
+                    alert("No Data Refresh");
+                }
+            });
+        }
+
+    </script>
+
+
+</body>
+</html>
